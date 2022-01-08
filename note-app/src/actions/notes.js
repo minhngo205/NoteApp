@@ -18,7 +18,7 @@ export const getNote = (id) => async (dispatch) => {
 
     const { data } = await api.fetchNote(id);
 
-    dispatch({ type: FETCH_NOTE, payload: { post: data } });
+    dispatch({ type: FETCH_NOTE, payload: { note: data } });
   } catch (error) {
     console.log(error);
   }
