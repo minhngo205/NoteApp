@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
 import {Button, ButtonGroup, Grid, TextField} from "@material-ui/core";
 import ChipInput from "material-ui-chip-input";
 import FileBase from 'react-file-base64';
@@ -33,9 +32,6 @@ const useStyles = makeStyles(theme => ({
 
 export const PopupForm = ({ Data, editNote }) => {
     const [noteData, setNoteData] = useState(Data);
-    // console.log(post)
-    const dispatch = useDispatch();
-    // const history = useHistory();
     const classes = useStyles()
 
     const clear = () => {
@@ -93,7 +89,7 @@ export const PopupForm = ({ Data, editNote }) => {
                         <FileBase style={{display: 'none'}} id='file-input' type="file" multiple={false} onDone={({ base64 }) => setNoteData({ ...noteData, selectedFile: base64 })} />
                     </div>
 
-                    <img className={classes.previewImg} src={ noteData.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png' } />
+                    <img alt={noteData.title} className={classes.previewImg} src={ noteData.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png' } />
 
                     <ButtonGroup className={classes.buttonGroup} >
                         <Button className={classes.button}

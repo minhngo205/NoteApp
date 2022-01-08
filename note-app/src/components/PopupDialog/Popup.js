@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Dialog, DialogContent, DialogTitle, IconButton, Typography} from "@material-ui/core";
+import {Button, Dialog, DialogContent, DialogTitle, Typography} from "@material-ui/core";
 import {Close} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/core/styles";
 

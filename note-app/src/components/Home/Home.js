@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { Container, Grow, Grid, AppBar, TextField, Button, Paper, IconButton, Collapse } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import ChipInput from 'material-ui-chip-input';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { useEffect } from 'react';
 
-import { getPostsBySearch } from '../../actions/notes';
-import Notes from '../Posts/Notes';
+import { getNotesBySearch } from '../../actions/notes';
+import Notes from '../Notes/Notes';
 import Form from '../Form/Form';
 import Pagination from '../Pagination';
 import useStyles from './styles';
@@ -27,9 +26,9 @@ const Home = () => {
   const [search, setSearch] = useState('');
   const history = useHistory();
 
-  const searchPost = () => {
+  const searchNote = () => {
     if (search.trim()) {
-      dispatch(getPostsBySearch({ search }));
+      dispatch(getNotesBySearch({ search }));
       history.push(`/notes/search?searchQuery=${search || 'none'}`);
     } else {
       history.push('/');
@@ -38,7 +37,7 @@ const Home = () => {
 
   const handleKeyPress = (e) => {
     if (e.keyCode === 13) {
-      searchPost();
+      searchNote();
     }
   };
 
@@ -85,7 +84,7 @@ const Home = () => {
                   name="search" variant="outlined" label="Search Notes" fullWidth
                   value={search}
                   onChange={(e) => setSearch(e.target.value)} />
-              <Button onClick={searchPost} className={classes.searchButton} variant="contained" color="primary">Search</Button>
+              <Button onClick={searchNote} className={classes.searchButton} variant="contained" color="primary">Search</Button>
             </AppBar>
             <Form currentId={currentId} setCurrentId={setCurrentId} />
             {(!searchQuery) && (

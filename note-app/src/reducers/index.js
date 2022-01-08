@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import posts from './notes';
+import notes from './notes';
 import auth from './auth';
 
-export const reducers = combineReducers({ posts, auth });
+export const reducers = combineReducers({ notes, auth });

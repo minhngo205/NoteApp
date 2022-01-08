@@ -9,19 +9,18 @@ import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 
-import { importantPost, deletePost } from '../../../actions/notes';
+import { importantNote, deleteNote } from '../../../actions/notes';
 import useStyles from './styles';
 
-const Note = ({ post, setCurrentId }) => {
-  const user = JSON.parse(localStorage.getItem('profile'));
-  const [isImportant, setImportant] = useState(post?.isImportant);
+const Note = ({ note, setCurrentId }) => {
+  const [isImportant, setImportant] = useState(note?.isImportant);
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
 
   const handleImportant = async () => {
-    dispatch(importantPost(post._id))
-    setImportant(!post.isImportant) 
+    dispatch(importantNote(note._id))
+    setImportant(!note.isImportant)
   };
 
   const Importance = () => {
@@ -39,10 +38,9 @@ const Note = ({ post, setCurrentId }) => {
     )
   };
 
-  const openPost = (e) => {
-    // dispatch(getPost(post._id, history));
+  const openNote = (e) => {
 
-    history.push(`/note/${post._id}`);
+    history.push(`/note/${note._id}`);
   };
 
   return (
@@ -51,19 +49,19 @@ const Note = ({ post, setCurrentId }) => {
         component="span"
         name="test"
         className={classes.cardAction}
-        onClick={openPost}
+        onClick={openNote}
       >
-        <CardMedia className={classes.media} image={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} title={post.title} />
+        <CardMedia className={classes.media} image={note.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} title={note.title} />
         <div className={classes.overlay}>
-          <Typography className={classes.topTitle} variant="h6">{post.title}</Typography>
-          <Typography variant="body2"> Created {moment(post.createAt).fromNow()}</Typography>
+          <Typography className={classes.topTitle} variant="h6">{note.title}</Typography>
+          <Typography variant="body2"> Created {moment(note.createAt).fromNow()}</Typography>
         </div>
 
         <div className={classes.overlay2} name="edit">
           <Button
             onClick={(e) => {
               e.stopPropagation();
-              setCurrentId(post._id);
+              setCurrentId(note._id);
             }}
             style={{ color: 'white' }}
             size="small"
@@ -73,18 +71,18 @@ const Note = ({ post, setCurrentId }) => {
         </div>
 
         <div className={classes.details}>
-          <Typography variant="body2" color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
+          <Typography variant="body2" color="textSecondary" component="h2">{note.tags.map((tag) => `#${tag} `)}</Typography>
         </div>
-        <Typography className={classes.title} gutterBottom variant="h5" component="h2">{post.title}</Typography>
+        <Typography className={classes.title} gutterBottom variant="h5" component="h2">{note.title}</Typography>
         <CardContent>
-          <Typography className={classes.topTitle} variant="body2" color="textSecondary" component="p">{post.message.split(' ').splice(0, 20).join(' ')}...</Typography>
+          <Typography className={classes.topTitle} variant="body2" color="textSecondary" component="p">{note.message.split(' ').splice(0, 20).join(' ')}...</Typography>
         </CardContent>
       </ButtonBase>
       <CardActions className={classes.cardActions}>
           
         <Importance/>
 
-        <Button size="small" color="secondary" onClick={() => dispatch(deletePost(post._id))}>
+        <Button size="small" color="secondary" onClick={() => dispatch(deleteNote(note._id))}>
           <DeleteIcon fontSize="small" /> &nbsp; Delete
         </Button>  
 

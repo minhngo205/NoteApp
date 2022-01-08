@@ -2,33 +2,32 @@ import {
   START_LOADING,
   END_LOADING,
   FETCH_ALL,
-  FETCH_POST,
+  FETCH_NOTE,
   FETCH_BY_SEARCH,
   CREATE,
   UPDATE,
   DELETE,
   IMPORTANT,
-  COMMENT,
   FETCH_BY_TAG
 } from '../constants/actionTypes';
 import * as api from '../api/index.js';
 
-export const getPost = (id) => async (dispatch) => {
+export const getNote = (id) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
 
-    const { data } = await api.fetchPost(id);
+    const { data } = await api.fetchNote(id);
 
-    dispatch({ type: FETCH_POST, payload: { post: data } });
+    dispatch({ type: FETCH_NOTE, payload: { post: data } });
   } catch (error) {
     console.log(error);
   }
 };
 
-export const getPosts = (page) => async (dispatch) => {
+export const getNotes = (page) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
-    const { data: { data, currentPage, numberOfPages } } = await api.fetchPosts(page);
+    const { data: { data, currentPage, numberOfPages } } = await api.fetchNotes(page);
 
     dispatch({ type: FETCH_ALL, payload: { data, currentPage, numberOfPages } });
     dispatch({ type: END_LOADING });
@@ -37,10 +36,10 @@ export const getPosts = (page) => async (dispatch) => {
   }
 };
 
-export const getPostsByTag = (tagQuery) => async (dispatch) => {
+export const getNotesByTag = (tagQuery) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
-    const { data: { data } } = await api.fetchPostsByTag(tagQuery);
+    const { data: { data } } = await api.fetchNotesByTag(tagQuery);
 
     dispatch({ type: FETCH_BY_TAG, payload: { data } });
     dispatch({ type: END_LOADING });
@@ -49,10 +48,10 @@ export const getPostsByTag = (tagQuery) => async (dispatch) => {
   }
 };
 
-export const getPostsBySearch = (searchQuery) => async (dispatch) => {
+export const getNotesBySearch = (searchQuery) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
-    const { data: { data } } = await api.fetchPostsBySearch(searchQuery);
+    const { data: { data } } = await api.fetchNotesBySearch(searchQuery);
 
     dispatch({ type: FETCH_BY_SEARCH, payload: { data } });
     dispatch({ type: END_LOADING });
@@ -61,10 +60,10 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
   }
 };
 
-export const createPost = (post, history) => async (dispatch) => {
+export const createNote = (note, history) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
-    const { data } = await api.createPost(post);
+    const { data } = await api.createNote(note);
 
     dispatch({ type: CREATE, payload: data });
 
@@ -74,9 +73,9 @@ export const createPost = (post, history) => async (dispatch) => {
   }
 };
 
-export const updatePost = (id, post) => async (dispatch) => {
+export const updateNote = (id, note) => async (dispatch) => {
   try {
-    const { data } = await api.updatePost(id, post);
+    const { data } = await api.updateNote(id, note);
 
     dispatch({ type: UPDATE, payload: data });
   } catch (error) {
@@ -84,11 +83,11 @@ export const updatePost = (id, post) => async (dispatch) => {
   }
 };
 
-export const importantPost = (id) => async (dispatch) => {
+export const importantNote = (id) => async (dispatch) => {
   const user = JSON.parse(localStorage.getItem('profile'));
 
   try {
-    const { data } = await api.importantPost(id, user?.token);
+    const { data } = await api.importantNote(id, user?.token);
 
     dispatch({ type: IMPORTANT, payload: data });
   } catch (error) {
@@ -96,21 +95,9 @@ export const importantPost = (id) => async (dispatch) => {
   }
 };
 
-export const commentPost = (value, id) => async (dispatch) => {
+export const deleteNote = (id) => async (dispatch) => {
   try {
-    const { data } = await api.comment(value, id);
-
-    dispatch({ type: COMMENT, payload: data });
-
-    return data.comments;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const deletePost = (id) => async (dispatch) => {
-  try {
-    await await api.deletePost(id);
+    await api.deleteNote(id);
 
     dispatch({ type: DELETE, payload: id });
   } catch (error) {

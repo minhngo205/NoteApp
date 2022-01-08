@@ -6,10 +6,10 @@ import Note from './Note/Note';
 import useStyles from './styles';
 
 const Notes = ({ setCurrentId }) => {
-  const { posts, isLoading } = useSelector((state) => state.posts);
+  const { notes, isLoading } = useSelector((state) => state.notes);
   const classes = useStyles();
 
-  if (!posts.length && !isLoading) return (
+  if (!notes.length && !isLoading) return (
       <div className={classes.titleRoot}>
           <div className={classes.TitleContainer}>
             <h1 className={classes.title}>
@@ -21,10 +21,10 @@ const Notes = ({ setCurrentId }) => {
 
   return (
     isLoading ? <CircularProgress /> : (
-      <Grid className={classes.container} container alignItems="stretch" spacing={3}>
-        {posts?.map((post) => (
-          <Grid key={post._id} item xs={12} sm={12} md={6} lg={3}>
-            <Note post={post} setCurrentId={setCurrentId} />
+      <Grid container alignItems="stretch" spacing={3}>
+        {notes?.map((note) => (
+          <Grid key={note._id} item xs={12} sm={12} md={6} lg={3}>
+            <Note note={note} setCurrentId={setCurrentId} />
           </Grid>
         ))}
       </Grid>
